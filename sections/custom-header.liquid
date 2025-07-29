@@ -3,16 +3,6 @@
     background: {{ section.settings.header_bg_color }};
     padding-top: {{ section.settings.header_top_padding }}px;
     padding-bottom: {{ section.settings.header_bottom_padding }}px;
-    transition: padding 0.3s ease, background 0.3s ease, box-shadow 0.3s ease;
-  }
-
-  .custom-header.sticky {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 9999;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
   }
   
   .custom-header .header-inner,
@@ -198,23 +188,6 @@
     </div>
   </div>
 </header>
-
-<script>
-  const header = document.querySelector('.custom-header');
-  const openBtn = document.getElementById('menu-open');
-  const closeBtn = document.getElementById('menu-close');
-
-  openBtn?.addEventListener('click', () => header.classList.add('menu-opened'));
-  closeBtn?.addEventListener('click', () => header.classList.remove('menu-opened'));
-
-  window.addEventListener('scroll', () => {
-    if (window.scrollY > 0) {
-      header.classList.add('sticky');
-    } else {
-      header.classList.remove('sticky');
-    }
-  });
-</script>
 
 {% schema %}
   {
