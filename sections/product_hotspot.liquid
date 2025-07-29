@@ -315,7 +315,7 @@
             {% if block.settings.image %}
               <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ product.title }}" />
             
-              <button class="quick-view" data-modal-target="quick-view-{{ product.handle }}" style="top: {{ block.settings.popup_vertical }}%; left: {{ block.settings.popup_horizontal }}%; transform: translate({{ block.settings.popup_horizontal }}% , {{ block.settings.popup_vertical }}%)">
+              <button class="quick-view" data-modal-target="quick-view-{{ product.handle }}" style="top: {{ block.settings.popup_vertical }}%; left: {{ block.settings.popup_horizontal }}%; transform: translate(-{{ block.settings.popup_horizontal }}% , -{{ block.settings.popup_vertical }}%)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11" fill="none">
                   <path d="M5.3457 1.04175V9.50329" stroke="black" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
                   <path d="M1.11523 5.27246H9.57677" stroke="black" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
@@ -418,57 +418,67 @@
   </div>
 </div>
 
-<script>
-  window.jacketVariantId = {{ all_products['soft-winter-jacket'].variants.first.id }};
-</script>
+{% assign bundled_product = all_products['soft-winter-jacket'] %}
+{% if bundled_product and bundled_product.variants.size > 0 %}
+  <script>
+    const softWinterJacketVariantId = {{ bundled_product.variants.first.id }};
+  </script>
+{% endif %}
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('.quick-view').forEach(button => {
+      button.addEventListener('click', function () {
+        const targetId = this.dataset.modalTarget;
+        document.getElementById(targetId).setAttribute('aria-hidden', 'false');
+      });
+    });
+
+    document.querySelectorAll('.close-quick-view').forEach(btn => {
+      btn.addEventListener('click', function () {
+        this.closest('.quick-view-modal').setAttribute('aria-hidden', 'true');
+      });
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === "Escape") {
+        document.querySelectorAll('.quick-view-modal').forEach(modal => {
+          modal.setAttribute('aria-hidden', 'true');
+        });
+      }
+    });
+
     document.querySelectorAll('.quick-view-form').forEach(form => {
       const variantInput = form.querySelector('.variant-id');
       const swatches = form.querySelectorAll('.swatch');
       const sizeSelect = form.querySelector('.size-select');
-      const variantsJson = document.getElementById(`variants-${form.dataset.productId}`);
-      if (!variantsJson) return;
-  
-      const variants = JSON.parse(variantsJson.textContent);
-  
-      function getSelectedColor() {
-        const activeSwatch = form.querySelector('.swatch.active');
-        return activeSwatch ? activeSwatch.dataset.color : null;
-      }
-  
-      function getSelectedSize() {
-        return sizeSelect?.value || null;
-      }
-  
-      function updateVariantId() {
-        const color = getSelectedColor();
-        const size = getSelectedSize();
-  
+      const variants = JSON.parse(document.getElementById(`variants-${form.dataset.productId}`).textContent);
+
+      function updateVariant() {
+        const selectedColor = form.querySelector('.swatch.active')?.dataset.color;
+        const selectedSize = sizeSelect?.value || null;
         const matched = variants.find(v =>
-          v.options.includes(color) &&
-          (!size || v.options.includes(size))
+          v.options.includes(selectedColor) &&
+          (!selectedSize || v.options.includes(selectedSize))
         );
-  
-        if (matched) {
-          variantInput.value = matched.id;
-        }
+        if (matched) variantInput.value = matched.id;
       }
-  
+
       swatches.forEach(swatch => {
         swatch.addEventListener('click', () => {
           swatches.forEach(s => s.classList.remove('active'));
           swatch.classList.add('active');
-          updateVariantId();
+          updateVariant();
         });
       });
-  
+
       if (sizeSelect) {
         sizeSelect.addEventListener('change', () => {
-          updateVariantId();
+          updateVariant();
+
           const selectedIndex = sizeSelect.selectedIndex;
           const options = sizeSelect.querySelectorAll('option');
+
           options.forEach((option, index) => {
             if (index === selectedIndex && option.value !== "") {
               option.classList.add('selected');
@@ -478,43 +488,39 @@
           });
         });
       }
-  
+
       form.addEventListener('submit', function (e) {
-        const selectedColor = getSelectedColor();
-        const selectedSize = getSelectedSize();
-  
-        if (selectedColor === "Black" && selectedSize === "M") {
+        const selectedColor = form.querySelector('.swatch.active')?.dataset.color?.toLowerCase();
+        const selectedSize = sizeSelect?.value?.toLowerCase();
+
+        if (selectedColor === 'black' && selectedSize === 'medium' && typeof softWinterJacketVariantId !== 'undefined') {
           e.preventDefault();
-  
-          const mainVariantId = variantInput.value;
-          const jacketVariantId = window.jacketVariantId;
-  
+
+          const currentVariantId = variantInput.value;
+
           fetch('/cart/add.js', {
             method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
+            headers: {
+              'Content-Type': 'application/json'
+            },
             body: JSON.stringify({
               items: [
-                { id: mainVariantId, quantity: 1 },
-                { id: jacketVariantId, quantity: 1 }
+                { id: currentVariantId, quantity: 1 },
+                { id: softWinterJacketVariantId, quantity: 1 }
               ]
             })
           })
-          .then(response => {
-            if (!response.ok) throw new Error("Cart add failed");
-            return response.json();
-          })
+          .then(res => res.json())
           .then(() => {
-            window.location.href = "/cart";
+            window.location.href = '/cart'; // Redirect to cart
           })
-          .catch(err => {
-            console.error("Error adding products:", err);
-            alert("There was a problem adding the products to your cart.");
-          });
+          .catch(err => console.error('Cart add failed:', err));
         }
       });
     });
   });
 </script>
+
 
 {% schema %}
   {
