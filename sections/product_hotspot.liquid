@@ -419,59 +419,58 @@
 </div>
 
 <script>
+  // Inject Soft Winter Jacket's first variant ID from handle
+  window.jacketVariantId = {{ all_products['soft-winter-jacket'].variants.first.id }};
+</script>
+
+
+<script>
   document.addEventListener("DOMContentLoaded", function () {
-    document.querySelectorAll('.quick-view').forEach(button => {
-      button.addEventListener('click', function () {
-        const targetId = this.dataset.modalTarget;
-        document.getElementById(targetId).setAttribute('aria-hidden', 'false');
-      });
-    });
-
-    document.querySelectorAll('.close-quick-view').forEach(btn => {
-      btn.addEventListener('click', function () {
-        this.closest('.quick-view-modal').setAttribute('aria-hidden', 'true');
-      });
-    });
-
-    document.addEventListener('keydown', function (e) {
-      if (e.key === "Escape") {
-        document.querySelectorAll('.quick-view-modal').forEach(modal => {
-          modal.setAttribute('aria-hidden', 'true');
-        });
-      }
-    });
-
     document.querySelectorAll('.quick-view-form').forEach(form => {
       const variantInput = form.querySelector('.variant-id');
       const swatches = form.querySelectorAll('.swatch');
       const sizeSelect = form.querySelector('.size-select');
-      const variants = JSON.parse(document.getElementById(`variants-${form.dataset.productId}`).textContent);
-
-      function updateVariant() {
-        const selectedColor = form.querySelector('.swatch.active')?.dataset.color;
-        const selectedSize = sizeSelect?.value || null;
-        const matched = variants.find(v =>
-          v.options.includes(selectedColor) &&
-          (!selectedSize || v.options.includes(selectedSize))
-        );
-        if (matched) variantInput.value = matched.id;
+      const variantsJson = document.getElementById(`variants-${form.dataset.productId}`);
+      if (!variantsJson) return;
+  
+      const variants = JSON.parse(variantsJson.textContent);
+  
+      function getSelectedColor() {
+        const activeSwatch = form.querySelector('.swatch.active');
+        return activeSwatch ? activeSwatch.dataset.color : null;
       }
-
+  
+      function getSelectedSize() {
+        return sizeSelect?.value || null;
+      }
+  
+      function updateVariantId() {
+        const color = getSelectedColor();
+        const size = getSelectedSize();
+  
+        const matched = variants.find(v =>
+          v.options.includes(color) &&
+          (!size || v.options.includes(size))
+        );
+  
+        if (matched) {
+          variantInput.value = matched.id;
+        }
+      }
+  
       swatches.forEach(swatch => {
         swatch.addEventListener('click', () => {
           swatches.forEach(s => s.classList.remove('active'));
           swatch.classList.add('active');
-          updateVariant();
+          updateVariantId();
         });
       });
-
+  
       if (sizeSelect) {
         sizeSelect.addEventListener('change', () => {
-          updateVariant();
-
+          updateVariantId();
           const selectedIndex = sizeSelect.selectedIndex;
           const options = sizeSelect.querySelectorAll('option');
-      
           options.forEach((option, index) => {
             if (index === selectedIndex && option.value !== "") {
               option.classList.add('selected');
@@ -481,9 +480,45 @@
           });
         });
       }
+  
+      form.addEventListener('submit', function (e) {
+        const selectedColor = getSelectedColor();
+        const selectedSize = getSelectedSize();
+  
+        if (selectedColor === "Black" && selectedSize === "M") {
+          e.preventDefault();
+  
+          const mainVariantId = variantInput.value;
+          const jacketVariantId = window.jacketVariantId;
+  
+          fetch('/cart/add.js', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              items: [
+                { id: mainVariantId, quantity: 1 },
+                { id: jacketVariantId, quantity: 1 }
+              ]
+            })
+          })
+          .then(response => {
+            if (!response.ok) throw new Error("Cart add failed");
+            return response.json();
+          })
+          .then(() => {
+            // Redirect to cart after both items added
+            window.location.href = "/cart";
+          })
+          .catch(err => {
+            console.error("Error adding products:", err);
+            alert("There was a problem adding the products to your cart.");
+          });
+        }
+      });
     });
   });
 </script>
+
 
 {% schema %}
   {
