@@ -1,8 +1,8 @@
 <style>
   .custom-header {
     background: {{ section.settings.header_bg_color }};
-    padding: 10px 23px;
-    font-family: sans-serif;
+    padding-top: {{ section.settings.header_top_padding }}px;
+    padding-bottom: {{ section.settings.header_bottom_padding }}px;
   }
 
   .custom-header.sticky {
@@ -272,6 +272,26 @@
         "id": "button_text_color",
         "label": "Button Text Color",
         "default": "#000000"
+      },
+      {
+        "type": "range",
+        "id": "header_top_padding",
+        "default": 23,
+        "label": "Header Top Padding",
+        "min": 0,
+        "max": 32,
+        "unit": "px",
+        "step": 1
+      },
+      {
+        "type": "range",
+        "id": "header_bottom_padding",
+        "default": 23,
+        "label": "Header bottom Padding",
+        "min": 0,
+        "max": 32,
+        "unit": "px",
+        "step": 1
       }
     ],
     "presets": [
