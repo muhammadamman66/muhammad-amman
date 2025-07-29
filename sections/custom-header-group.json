@@ -8,8 +8,22 @@
  * ------------------------------------------------------------
  */
 {
+  "name": "t:sections.header.name",
   "type": "header",
-  "name": "Group name",
-  "sections": {},
-  "order": []
+  "sections": {
+    "custom-header": {
+      "type": "custom-header",
+      "settings": {
+        "logo": "shopify://shop_images/Group_1000007777.png",
+        "center_text": "Find the ideal gift for your loved ones.",
+        "button_text": "CHOOSE GIFT",
+        "button_link": "#",
+        "text_color": "#000000",
+        "button_text_color": "#000000"
+      }
+    }
+  },
+  "order": [
+    "custom-header"
+  ]
 }
