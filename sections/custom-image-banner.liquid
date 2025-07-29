@@ -138,37 +138,31 @@
 
 <div class="custom-banner-{{ section.id }}">
   <div class="custom-banner-content">
-    {% if section.settings.desktop_image != blank %}
-      <img src="{{ section.settings.desktop_image | image_url }}" alt="Gift Guide Banner" class="custom-banner-image small-hide medium-hide">
-    {% endif %}
+    <img src="{{ section.settings.desktop_image | image_url }}" alt="Gift Guide Banner" class="custom-banner-image small-hide medium-hide">
     <div class="mobile-image-and-button">
-      {% if section.settings.mobile_image != blank %}
-        <img src="{{ section.settings.mobile_image | image_url }}" alt="Gift Guide Banner" class="custom-banner-image large-up-hide">
-      {% endif %}
-      <a href="{{ section.settings.button_link }}" class="custom-banner-button mobile large-up-hide">
-        {{ section.settings.button_text }}
-        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="13" viewBox="0 0 28 13" fill="none">
-          <path d="M1.11108 5.74402L0.361084 5.74402L0.361084 7.24402L1.11108 7.24402L1.11108 5.74402ZM27.1487 7.02435C27.4416 6.73146 27.4416 6.25658 27.1487 5.96369L22.3757 1.19072C22.0828 0.897826 21.6079 0.897826 21.315 1.19072C21.0221 1.48361 21.0221 1.95849 21.315 2.25138L25.5577 6.49402L21.315 10.7367C21.0221 11.0296 21.0221 11.5044 21.315 11.7973C21.6079 12.0902 22.0828 12.0902 22.3757 11.7973L27.1487 7.02435ZM1.11108 7.24402L26.6183 7.24402L26.6183 5.74402L1.11108 5.74402L1.11108 7.24402Z" fill="white"/>
-        </svg>
-      </a>
+      <img src="{{ section.settings.mobile_image | image_url }}" alt="Gift Guide Banner" class="custom-banner-image large-up-hide">
+        <a href="{{ section.settings.button_link }}" class="custom-banner-button mobile large-up-hide">
+          {{ section.settings.button_text }}
+          <svg xmlns="http://www.w3.org/2000/svg" width="28" height="13" viewBox="0 0 28 13" fill="none">
+            <path d="M1.11108 5.74402L0.361084 5.74402L0.361084 7.24402L1.11108 7.24402L1.11108 5.74402ZM27.1487 7.02435C27.4416 6.73146 27.4416 6.25658 27.1487 5.96369L22.3757 1.19072C22.0828 0.897826 21.6079 0.897826 21.315 1.19072C21.0221 1.48361 21.0221 1.95849 21.315 2.25138L25.5577 6.49402L21.315 10.7367C21.0221 11.0296 21.0221 11.5044 21.315 11.7973C21.6079 12.0902 22.0828 12.0902 22.3757 11.7973L27.1487 7.02435ZM1.11108 7.24402L26.6183 7.24402L26.6183 5.74402L1.11108 5.74402L1.11108 7.24402Z" fill="white"/>
+          </svg>
+        </a>
     </div>
 
-    <div class="image-with-text">
-      <div class="custom-banner-text text-{{ section.settings.text_alignment }}" style="background-color: {{ section.settings.overlay_color }}">
-        <h2 class="heading">{{ section.settings.heading }}</h2>
-        <p class="description">{{ section.settings.subheading }}</p>
-        {% if section.settings.button_text != blank %}
-          <a href="{{ section.settings.button_link }}" class="custom-banner-button small-hide medium-hide">
-            {{ section.settings.button_text }}
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="13" viewBox="0 0 28 13" fill="none">
-              <path d="M1.11108 5.74402L0.361084 5.74402L0.361084 7.24402L1.11108 7.24402L1.11108 5.74402ZM27.1487 7.02435C27.4416 6.73146 27.4416 6.25658 27.1487 5.96369L22.3757 1.19072C22.0828 0.897826 21.6079 0.897826 21.315 1.19072C21.0221 1.48361 21.0221 1.95849 21.315 2.25138L25.5577 6.49402L21.315 10.7367C21.0221 11.0296 21.0221 11.5044 21.315 11.7973C21.6079 12.0902 22.0828 12.0902 22.3757 11.7973L27.1487 7.02435ZM1.11108 7.24402L26.6183 7.24402L26.6183 5.74402L1.11108 5.74402L1.11108 7.24402Z" fill="white"/>
-            </svg>
-          </a>
-        {% endif %}
-      </div>
-      {% if section.settings.mobile_image != blank %}
-        <img src="{{ section.settings.mobile_image | image_url }}" alt="Gift Guide Banner" class="custom-banner-image image_text small-hide medium-hide">
-      {% endif %}
+      <div class="image-with-text">
+        <div class="custom-banner-text text-{{ section.settings.text_alignment }}" style="background-color: {{ section.settings.overlay_color }}">
+          <h2 class="heading">{{ section.settings.heading }}</h2>
+          <p class="description">{{ section.settings.subheading }}</p>
+          {% if section.settings.button_text != blank %}
+            <a href="{{ section.settings.button_link }}" class="custom-banner-button small-hide medium-hide">
+              {{ section.settings.button_text }}
+              <svg xmlns="http://www.w3.org/2000/svg" width="28" height="13" viewBox="0 0 28 13" fill="none">
+                <path d="M1.11108 5.74402L0.361084 5.74402L0.361084 7.24402L1.11108 7.24402L1.11108 5.74402ZM27.1487 7.02435C27.4416 6.73146 27.4416 6.25658 27.1487 5.96369L22.3757 1.19072C22.0828 0.897826 21.6079 0.897826 21.315 1.19072C21.0221 1.48361 21.0221 1.95849 21.315 2.25138L25.5577 6.49402L21.315 10.7367C21.0221 11.0296 21.0221 11.5044 21.315 11.7973C21.6079 12.0902 22.0828 12.0902 22.3757 11.7973L27.1487 7.02435ZM1.11108 7.24402L26.6183 7.24402L26.6183 5.74402L1.11108 5.74402L1.11108 7.24402Z" fill="white"/>
+              </svg>
+            </a>
+          {% endif %}
+        </div>
+      <img src="{{ section.settings.mobile_image | image_url }}" alt="Gift Guide Banner" class="custom-banner-image image_text small-hide medium-hide">
     </div>
   </div>
 </div>
