@@ -59,10 +59,20 @@
             "popup_vertical": 55,
             "popup_horizontal": 55
           }
+        },
+        "image_card_zaepQz": {
+          "type": "image_card",
+          "settings": {
+            "image": "shopify://shop_images/image823.png",
+            "product": "blue-silk-tuxedo",
+            "popup_vertical": 50,
+            "popup_horizontal": 70
+          }
         }
       },
       "block_order": [
-        "image_card_dAWXXN"
+        "image_card_dAWXXN",
+        "image_card_zaepQz"
       ],
       "name": "Products Hotspot",
       "settings": {
