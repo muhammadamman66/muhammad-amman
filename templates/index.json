@@ -68,11 +68,48 @@
             "popup_vertical": 50,
             "popup_horizontal": 85
           }
+        },
+        "image_card_tz7Anq": {
+          "type": "image_card",
+          "settings": {
+            "image": "shopify://shop_images/image824.png",
+            "product": "chequered-red-shirt",
+            "popup_vertical": 15,
+            "popup_horizontal": 65
+          }
+        },
+        "image_card_PmHWn8": {
+          "type": "image_card",
+          "settings": {
+            "product": "",
+            "popup_vertical": 10,
+            "popup_horizontal": 10
+          }
+        },
+        "image_card_JqFeCC": {
+          "type": "image_card",
+          "settings": {
+            "product": "",
+            "popup_vertical": 10,
+            "popup_horizontal": 10
+          }
+        },
+        "image_card_tc6PwN": {
+          "type": "image_card",
+          "settings": {
+            "product": "",
+            "popup_vertical": 10,
+            "popup_horizontal": 10
+          }
         }
       },
       "block_order": [
         "image_card_dAWXXN",
-        "image_card_zaepQz"
+        "image_card_zaepQz",
+        "image_card_tz7Anq",
+        "image_card_PmHWn8",
+        "image_card_JqFeCC",
+        "image_card_tc6PwN"
       ],
       "name": "Products Hotspot",
       "settings": {
