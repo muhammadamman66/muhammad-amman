@@ -1,4 +1,14 @@
-<style></style>
+<style>
+  .products-hotspots-{{ section.id }} {
+    background-color: {{ section.settings.background_color }};
+  }
+  .products-hotspots-{{ section.id }} .section-heading {
+    margin-bottom: 30px;
+    color: {{ section.settings.heading_color }};
+    font-weight: 400;
+  }
+  
+</style>
 
 <div class="products-hotspots-{{ section.id }}">
   <div class="custom-container">
