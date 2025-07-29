@@ -1,6 +1,95 @@
 {% schema %}
   {
-    "name": "Section name",
-    "settings": []
+    "name": "Custom Rich Text",
+    "settings": [
+      {
+        "type": "color",
+        "id": "section_bg_color",
+        "label": "Section Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "richtext",
+        "id": "rich_text",
+        "label": "Rich Text",
+        "default": "<p>Rich Text</p>"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Rich Text Color",
+        "default": "#000000"
+      },
+      {
+        "type": "range",
+        "id": "font_size_desktop",
+        "label": "Font Size For Desktop",
+        "default": 16,
+        "min": 0,
+        "max": 32,
+        "unit": "px",
+        "step": 1
+      },
+      {
+        "type": "range",
+        "id": "font_size_mobile",
+        "label": "Font Size For Mobile",
+        "default": 14,
+        "min": 0,
+        "max": 32,
+        "unit": "px",
+        "step": 1
+      },
+      {
+        "type": "header",
+        "content": "Section Padding"
+      },
+      {
+        "type": "range",
+        "id": "padding_top_desktop",
+        "label": "Padding Top For Desktop",
+        "default": 10,
+        "min": 0,
+        "max": 100,
+        "unit": "px",
+        "step": 2
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_desktop",
+        "label": "Padding Bottom For Desktop",
+        "default": 10,
+        "min": 0,
+        "max": 100,
+        "unit": "px",
+        "step": 2
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "label": "Padding Top For Mobile",
+        "default": 10,
+        "min": 0,
+        "max": 100,
+        "unit": "px",
+        "step": 2
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "label": "Padding Top For Mobile",
+        "default": 10,
+        "min": 0,
+        "max": 100,
+        "unit": "px",
+        "step": 2
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom Rich Text",
+        "category": "Custom"
+      }
+    ]
   }
 {% endschema %}
