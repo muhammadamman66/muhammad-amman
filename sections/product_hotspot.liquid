@@ -314,15 +314,14 @@
           <div class="card-block">
             {% if block.settings.image %}
               <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ product.title }}" />
-            
-              <button class="quick-view" data-modal-target="quick-view-{{ product.handle }}" style="top: {{ block.settings.popup_vertical }}%; left: {{ block.settings.popup_horizontal }}%; transform: translate(-{{ block.settings.popup_horizontal }}% , -{{ block.settings.popup_vertical }}%)">
+              <button class="quick-view" data-modal-target="quick-view-{{ product.handle }}" style="top: {{ block.settings.popup_vertical }}%; left: {{ block.settings.popup_horizontal }}%; transform: translate({{ block.settings.popup_horizontal }}% , {{ block.settings.popup_vertical }}%)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11" fill="none">
                   <path d="M5.3457 1.04175V9.50329" stroke="black" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
                   <path d="M1.11523 5.27246H9.57677" stroke="black" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
                 </svg>
               </button>
             {% endif %}
-          
+
             <div class="quick-view-modal" id="quick-view-{{ product.handle }}" aria-hidden="true">
               <div class="modal-content">
                 <svg class="close-quick-view" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -339,6 +338,7 @@
                       <p class="product-description">{{ product.description | strip_html }}</p>
                     </div>
                   </div>
+
                   <div class="modal-details">
                     {% assign color_index = -1 %}
                     {% assign size_index = -1 %}
@@ -364,7 +364,6 @@
                               {% unless seen_colors contains color %}
                                 {% assign seen_colors = seen_colors | append: color | append: "," %}
                                 {% assign swatch_color = color | downcase %}
-                          
                                 <div
                                   class="swatch"
                                   data-color="{{ color }}"
@@ -377,7 +376,7 @@
                           </div>
                         {% endif %}
                       </div>
-                      
+
                       <div class="variants">
                         {% if size_index != -1 %}
                           <div class="option-label">Size</div>
@@ -396,6 +395,7 @@
                           </div>
                         {% endif %}
                       </div>
+
                       <script type="application/json" id="variants-{{ product.id }}">
                         {{ product.variants | json }}
                       </script>
@@ -418,6 +418,12 @@
   </div>
 </div>
 
+<!-- ✅ Inject Soft Winter Jacket variant ID -->
+<script>
+  window.jacketVariantId = {{ all_products['soft-winter-jacket'].variants.first.id }};
+</script>
+
+<!-- ✅ Main Script -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll('.quick-view').forEach(button => {
@@ -433,45 +439,51 @@
       });
     });
 
-    document.addEventListener('keydown', function (e) {
-      if (e.key === "Escape") {
-        document.querySelectorAll('.quick-view-modal').forEach(modal => {
-          modal.setAttribute('aria-hidden', 'true');
-        });
-      }
-    });
-
     document.querySelectorAll('.quick-view-form').forEach(form => {
       const variantInput = form.querySelector('.variant-id');
       const swatches = form.querySelectorAll('.swatch');
       const sizeSelect = form.querySelector('.size-select');
-      const variants = JSON.parse(document.getElementById(`variants-${form.dataset.productId}`).textContent);
+      const variantsJson = document.getElementById(`variants-${form.dataset.productId}`);
+      if (!variantsJson) return;
 
-      function updateVariant() {
-        const selectedColor = form.querySelector('.swatch.active')?.dataset.color;
-        const selectedSize = sizeSelect?.value || null;
+      const variants = JSON.parse(variantsJson.textContent);
+
+      function getSelectedColor() {
+        const activeSwatch = form.querySelector('.swatch.active');
+        return activeSwatch ? activeSwatch.dataset.color : null;
+      }
+
+      function getSelectedSize() {
+        return sizeSelect?.value || null;
+      }
+
+      function updateVariantId() {
+        const color = getSelectedColor();
+        const size = getSelectedSize();
+
         const matched = variants.find(v =>
-          v.options.includes(selectedColor) &&
-          (!selectedSize || v.options.includes(selectedSize))
+          v.options.includes(color) &&
+          (!size || v.options.includes(size))
         );
-        if (matched) variantInput.value = matched.id;
+
+        if (matched) {
+          variantInput.value = matched.id;
+        }
       }
 
       swatches.forEach(swatch => {
         swatch.addEventListener('click', () => {
           swatches.forEach(s => s.classList.remove('active'));
           swatch.classList.add('active');
-          updateVariant();
+          updateVariantId();
         });
       });
 
       if (sizeSelect) {
         sizeSelect.addEventListener('change', () => {
-          updateVariant();
-
+          updateVariantId();
           const selectedIndex = sizeSelect.selectedIndex;
           const options = sizeSelect.querySelectorAll('option');
-      
           options.forEach((option, index) => {
             if (index === selectedIndex && option.value !== "") {
               option.classList.add('selected');
@@ -481,66 +493,44 @@
           });
         });
       }
-    });
-  });
-</script>
-<script>
-  document.addEventListener('DOMContentLoaded', async function () {
-    const softJacketHandle = 'soft-winter-jacket';
 
-    // Get Soft Winter Jacket's default variant ID
-    let softJacketVariantId = null;
-    try {
-      const response = await fetch(`/products/${softJacketHandle}.js`);
-      const data = await response.json();
-      softJacketVariantId = data.variants[0].id;
-    } catch (err) {
-      console.error('Failed to fetch soft winter jacket variant:', err);
-    }
+      form.addEventListener('submit', function (e) {
+        const selectedColor = getSelectedColor();
+        const selectedSize = getSelectedSize();
 
-    // Attach submit listener to all quick-view forms
-    document.querySelectorAll('.quick-view-form').forEach(form => {
-      form.addEventListener('submit', async function (e) {
-        const variantId = form.querySelector('.variant-id').value;
-        const selectedColor = form.querySelector('.swatch.active')?.dataset.color?.toLowerCase();
-        const selectedSize = form.querySelector('.size-select')?.value?.toLowerCase();
+        if (selectedColor === "Black" && selectedSize === "M") {
+          e.preventDefault();
 
-        // Check for Color = Black and Size = M
-        if (selectedColor === 'black' && selectedSize === 'm' && softJacketVariantId) {
-          e.preventDefault(); // Stop normal form submission
+          const mainVariantId = variantInput.value;
+          const jacketVariantId = window.jacketVariantId;
 
-          // Add the original selected product
-          const originalResponse = await fetch('/cart/add.js', {
+          fetch('/cart/add.js', {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Accept': 'application/json'
-            },
-            body: JSON.stringify({ id: variantId, quantity: 1 })
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              items: [
+                { id: mainVariantId, quantity: 1 },
+                { id: jacketVariantId, quantity: 1 }
+              ]
+            })
+          })
+          .then(response => {
+            if (!response.ok) throw new Error("Cart add failed");
+            return response.json();
+          })
+          .then(() => {
+            window.location.href = "/cart";
+          })
+          .catch(err => {
+            console.error("Error adding products:", err);
+            alert("There was a problem adding the products to your cart.");
           });
-
-          if (originalResponse.ok) {
-            // Then add the Soft Winter Jacket
-            await fetch('/cart/add.js', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json',
-                'Accept': 'application/json'
-              },
-              body: JSON.stringify({ id: softJacketVariantId, quantity: 1 })
-            });
-
-            // Optionally redirect or show confirmation
-            window.location.href = '/cart'; // or show confirmation
-          } else {
-            alert('Failed to add product to cart');
-          }
         }
-        // Else, let it submit normally
       });
     });
   });
 </script>
+
 
 {% schema %}
   {
