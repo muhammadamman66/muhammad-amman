@@ -81,9 +81,10 @@
         "image_card_PmHWn8": {
           "type": "image_card",
           "settings": {
-            "product": "",
-            "popup_vertical": 10,
-            "popup_horizontal": 10
+            "image": "shopify://shop_images/image_829.png",
+            "product": "led-high-tops",
+            "popup_vertical": 15,
+            "popup_horizontal": 80
           }
         },
         "image_card_JqFeCC": {
