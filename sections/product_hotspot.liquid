@@ -419,10 +419,8 @@
 </div>
 
 <script>
-  // Inject Soft Winter Jacket's first variant ID from handle
   window.jacketVariantId = {{ all_products['soft-winter-jacket'].variants.first.id }};
 </script>
-
 
 <script>
   document.addEventListener("DOMContentLoaded", function () {
@@ -506,7 +504,6 @@
             return response.json();
           })
           .then(() => {
-            // Redirect to cart after both items added
             window.location.href = "/cart";
           })
           .catch(err => {
@@ -518,7 +515,6 @@
     });
   });
 </script>
-
 
 {% schema %}
   {
