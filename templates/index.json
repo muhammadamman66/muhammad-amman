@@ -90,9 +90,10 @@
         "image_card_JqFeCC": {
           "type": "image_card",
           "settings": {
-            "product": "",
-            "popup_vertical": 10,
-            "popup_horizontal": 10
+            "image": "shopify://shop_images/image826.png",
+            "product": "classic-varsity-top",
+            "popup_vertical": 25,
+            "popup_horizontal": 45
           }
         },
         "image_card_tc6PwN": {
