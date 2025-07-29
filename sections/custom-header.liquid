@@ -1,6 +1,66 @@
 {% schema %}
   {
-    "name": "Section name",
-    "settings": []
+    "name": "Custom Header",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Header Content"
+      },
+      {
+        "type": "image_picker",
+        "id": "logo",
+        "label": "Logo"
+      },
+      {
+        "type": "text",
+        "id": "center_text",
+        "label": "Center Text",
+        "default": "Header Centered Text"
+      },
+      {
+        "type": "text",
+        "id": "button_text",
+        "label": "Button Text",
+        "default": "Button Text"
+      },
+      {
+        "type": "url",
+        "id": "button_link",
+        "label": "Button Link"
+      },
+      {
+        "type": "header",
+        "content": "Colors for content"
+      },
+      {
+        "type": "color",
+        "id": "header_bg_color",
+        "label": "Header Background Color",
+        "default": "#F5F5F5"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Center Text Color",
+        "default": "#000000"
+      },
+      {
+        "type": "color",
+        "id": "button_bg_color",
+        "label": "Button Background Color",
+        "default": "#FFF544"
+      },
+      {
+        "type": "color",
+        "id": "button_text_color",
+        "label": "Button Text Color",
+        "default": "#000000"
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom Header"
+      }
+    ]
   }
 {% endschema %}
