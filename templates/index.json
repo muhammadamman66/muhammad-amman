@@ -47,9 +47,43 @@
         "mobile_content_alignment": "center",
         "show_text_below": false
       }
+    },
+    "product_hotspot_magVAY": {
+      "type": "product_hotspot",
+      "blocks": {
+        "image_card_dAWXXN": {
+          "type": "image_card",
+          "settings": {
+            "image": "shopify://shop_images/image822.png",
+            "product": "black-leather-bag",
+            "popup_vertical": 10,
+            "popup_horizontal": 10
+          }
+        }
+      },
+      "block_order": [
+        "image_card_dAWXXN"
+      ],
+      "name": "Products Hotspot",
+      "settings": {
+        "section_heading": "Section Heading",
+        "heading_size_desktop": 36,
+        "heading_size_tablet": 28,
+        "heading_size_mobile": 24,
+        "heading_margin_bottom": 30,
+        "background_color": "#ffffff",
+        "heading_color": "#000000",
+        "padding_top_desktop": 90,
+        "padding_bottom_desktop": 50,
+        "padding_top_tablet": 60,
+        "padding_bottom_tablet": 40,
+        "padding_top_mobile": 40,
+        "padding_bottom_mobile": 24
+      }
     }
   },
   "order": [
-    "image_banner"
+    "image_banner",
+    "product_hotspot_magVAY"
   ]
 }
