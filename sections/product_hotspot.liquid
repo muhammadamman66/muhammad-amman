@@ -1,3 +1,32 @@
+<style></style>
+
+<div class="products-hotspots-{{ section.id }}">
+  <div class="custom-container">
+    <div class="section-heading">{{ section.settings.section_heading }}</div>
+    <div class="grid-container">
+      {% for block in settings.blocks %}
+        {% assign product = block.settings.product %}
+        {% if product %}
+          <div class="card-block">
+            {% if block.settings.image %}
+              <img src="{{ block.settings.image | image_url: width: 600  }}" alt="{{ product.title }}">
+
+              <button class="quick-view">
+                <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11" fill="none">
+                  <path d="M5.3457 1.04175V9.50329" stroke="black" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
+                  <path d="M1.11523 5.27246H9.57677" stroke="black" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
+                </svg>
+              </button>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+<script></script>
+
 {% schema %}
   {
     "name": "Products Hotspot",
