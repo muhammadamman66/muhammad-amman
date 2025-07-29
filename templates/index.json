@@ -9,45 +9,6 @@
  */
 {
   "sections": {
-    "image_banner": {
-      "type": "image-banner",
-      "blocks": {
-        "heading": {
-          "type": "heading",
-          "settings": {
-            "heading": "Browse our latest products",
-            "heading_size": "h0"
-          }
-        },
-        "button": {
-          "type": "buttons",
-          "settings": {
-            "button_label_1": "Shop all",
-            "button_link_1": "shopify://collections/all",
-            "button_style_secondary_1": true,
-            "button_label_2": "",
-            "button_link_2": "",
-            "button_style_secondary_2": false
-          }
-        }
-      },
-      "block_order": [
-        "heading",
-        "button"
-      ],
-      "settings": {
-        "image_overlay_opacity": 40,
-        "image_height": "large",
-        "image_behavior": "none",
-        "desktop_content_position": "bottom-center",
-        "desktop_content_alignment": "center",
-        "show_text_box": false,
-        "color_scheme": "scheme-3",
-        "stack_images_on_mobile": false,
-        "mobile_content_alignment": "center",
-        "show_text_below": false
-      }
-    },
     "product_hotspot_magVAY": {
       "type": "product_hotspot",
       "blocks": {
@@ -99,9 +60,10 @@
         "image_card_tc6PwN": {
           "type": "image_card",
           "settings": {
-            "product": "",
-            "popup_vertical": 10,
-            "popup_horizontal": 10
+            "image": "shopify://shop_images/image827.png",
+            "product": "dark-denim-top",
+            "popup_vertical": 40,
+            "popup_horizontal": 80
           }
         }
       },
@@ -132,7 +94,6 @@
     }
   },
   "order": [
-    "image_banner",
     "product_hotspot_magVAY"
   ]
 }
