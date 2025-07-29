@@ -304,7 +304,7 @@
   }
 </style>
 
-<div class="products-hotspot-{{ section.id }}">
+<div class="products-hotspot-{{ section.id }}"><div class="products-hotspot-{{ section.id }}">
   <div class="custom-container">
     <div class="section-heading">{{ section.settings.section_heading }}</div>
     <div class="grid-container">
@@ -314,7 +314,7 @@
           <div class="card-block">
             {% if block.settings.image %}
               <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ product.title }}" />
-            
+
               <button class="quick-view" data-modal-target="quick-view-{{ product.handle }}" style="top: {{ block.settings.popup_vertical }}%; left: {{ block.settings.popup_horizontal }}%; transform: translate(-{{ block.settings.popup_horizontal }}% , -{{ block.settings.popup_vertical }}%)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11" fill="none">
                   <path d="M5.3457 1.04175V9.50329" stroke="black" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
@@ -322,7 +322,7 @@
                 </svg>
               </button>
             {% endif %}
-          
+
             <div class="quick-view-modal" id="quick-view-{{ product.handle }}" aria-hidden="true">
               <div class="modal-content">
                 <svg class="close-quick-view" xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 18 18" fill="none">
@@ -364,7 +364,6 @@
                               {% unless seen_colors contains color %}
                                 {% assign seen_colors = seen_colors | append: color | append: "," %}
                                 {% assign swatch_color = color | downcase %}
-                          
                                 <div
                                   class="swatch"
                                   data-color="{{ color }}"
@@ -377,7 +376,7 @@
                           </div>
                         {% endif %}
                       </div>
-                      
+
                       <div class="variants">
                         {% if size_index != -1 %}
                           <div class="option-label">Size</div>
@@ -396,6 +395,7 @@
                           </div>
                         {% endif %}
                       </div>
+
                       <script type="application/json" id="variants-{{ product.id }}">
                         {{ product.variants | json }}
                       </script>
@@ -475,23 +475,21 @@
       if (sizeSelect) {
         sizeSelect.addEventListener('change', () => {
           updateVariant();
-
           const selectedIndex = sizeSelect.selectedIndex;
           const options = sizeSelect.querySelectorAll('option');
-
           options.forEach((option, index) => {
-            if (index === selectedIndex && option.value !== "") {
-              option.classList.add('selected');
-            } else {
-              option.classList.remove('selected');
-            }
+            option.classList.toggle('selected', index === selectedIndex && option.value !== "");
           });
         });
       }
 
       form.addEventListener('submit', function (e) {
+        updateVariant(); // always refresh variant ID
         const selectedColor = form.querySelector('.swatch.active')?.dataset.color?.toLowerCase();
         const selectedSize = sizeSelect?.value?.toLowerCase();
+
+        console.log('Selected Color:', selectedColor);
+        console.log('Selected Size:', selectedSize);
 
         if (selectedColor === 'black' && selectedSize === 'medium' && typeof softWinterJacketVariantId !== 'undefined') {
           e.preventDefault();
@@ -500,9 +498,7 @@
 
           fetch('/cart/add.js', {
             method: 'POST',
-            headers: {
-              'Content-Type': 'application/json'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
               items: [
                 { id: currentVariantId, quantity: 1 },
@@ -512,7 +508,7 @@
           })
           .then(res => res.json())
           .then(() => {
-            window.location.href = '/cart'; // Redirect to cart
+            window.location.href = '/cart';
           })
           .catch(err => console.error('Cart add failed:', err));
         }
@@ -520,8 +516,7 @@
     });
   });
 </script>
-
-
+                            
 {% schema %}
   {
     "name": "Products Hotspot",
