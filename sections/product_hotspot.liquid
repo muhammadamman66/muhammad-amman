@@ -80,8 +80,8 @@
                                 {% assign seen_sizes = "" %}
                                 {% for variant in product.variants %}
                                   {% assign size = variant.options[size_index] %}
-                                  {% unless seen_size contains size %}
-                                    {% assign seen_sizes = seen_size | append: size | append: "," %}
+                                  {% unless seen_sizes contains size %}
+                                    {% assign seen_sizes = seen_sizes | append: size | append: "," %}
                                     <option value="{{ size }}">{{ size }}</option>
                                   {% endunless %}
                                 {% endfor %}
