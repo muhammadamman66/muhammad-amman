@@ -113,7 +113,72 @@
   </div>
 </div>
 
-<script></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll('.quick-view').forEach(button => {
+      button.addEventListener('click', function () {
+        const targetId = this.dataset.modalTarget;
+        document.getElementById(targetId).setAttribute('aria-hidden', 'false');
+      });
+    });
+
+    document.querySelectorAll('.close-quick-view').forEach(btn => {
+      btn.addEventListener('click', function () {
+        this.closest('.quick-view-modal').setAttribute('aria-hidden', 'true');
+      });
+    });
+
+    document.addEventListener('keydown', function (e) {
+      if (e.key === "Escape") {
+        document.querySelectorAll('.quick-view-modal').forEach(modal => {
+          modal.setAttribute('aria-hidden', 'true');
+        });
+      }
+    });
+
+    document.querySelectorAll('.quick-view-form').forEach(form => {
+      const variantInput = form.querySelector('.variant-id');
+      const swatches = form.querySelectorAll('.swatch');
+      const sizeSelect = form.querySelector('.size-select');
+      const variants = JSON.parse(document.getElementById(`variants-${form.dataset.productId}`).textContent);
+
+      function updateVariant() {
+        const selectedColor = form.querySelector('.swatch.active')?.dataset.color;
+        const selectedSize = sizeSelect?.value || null;
+        const matched = variants.find(v =>
+          v.options.includes(selectedColor) &&
+          (!selectedSize || v.options.includes(selectedSize))
+        );
+        if (matched) variantInput.value = matched.id;
+      }
+
+      swatches.forEach(swatch => {
+        swatch.addEventListener('click', () => {
+          swatches.forEach(s => s.classList.remove('active'));
+          swatch.classList.add('active');
+          updateVariant();
+        });
+      });
+
+      if (sizeSelect) {
+        sizeSelect.addEventListener('change', () => {
+          updateVariant();
+
+          const selectedIndex = sizeSelect.selectedIndex;
+          const options = sizeSelect.querySelectorAll('option');
+      
+          options.forEach((option, index) => {
+            if (index === selectedIndex && option.value !== "") {
+              option.classList.add('selected');
+            } else {
+              option.classList.remove('selected');
+            }
+          });
+        });
+      }
+    });
+  });
+</script>
 
 {% schema %}
   {
