@@ -14,7 +14,8 @@
       "name": "Custom Rich Text",
       "settings": {
         "section_bg_color": "#f5f5f5",
-        "rich_text": "<p>Rich Text</p>",
+        "rich_text": "<p>SUSTAINABLE, ETHICALLY MADE CLOTHES IN SIZES XXS TO 6XL</p>",
+        "rich_text_mobile": "<p>SUSTAINABLE, ETHICALLY MADE ACTIVEWEAR</p>",
         "text_color": "#000000",
         "font_size_desktop": 16,
         "font_size_mobile": 14,
