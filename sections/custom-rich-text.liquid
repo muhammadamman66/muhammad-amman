@@ -1,20 +1,26 @@
 <style>
-  .custon-richtext-{{ section.id }} {
+  .custom-richtext-{{ section.id }} {
     background: {{ section.settings.section_bg_color }};
     padding-top: {{ section.settings.padding_top_desktop }}px;
     padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
   }
   @media screen and (max-eidth: 767px) {
-    .custon-richtext-{{ section.id }} {
+    .custom-richtext-{{ section.id }} {
       padding-top: {{ section.settings.padding_top_mobile }}px;
       padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+    .custom-richtext-{{ section.id }} .custom-text {
+      line-height: normal;
+      font-size: {{ section.settings.font_size_mobile }}px;
+      font-weight: 400;
+      color: {{ section.settings.text_color }};
     }
   }
 </style>
 
 <div class="custom-richtext-{{ section.id }}">
   <div class="custom-container">
-    <div class="custom-text">{{ section.settings.rich_text }}</div>
+    <div class="custom-text">{{ section.settings.rich_text | strip_html }}</div>
   </div>
 </div>
 
