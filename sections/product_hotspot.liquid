@@ -418,12 +418,10 @@
   </div>
 </div>
 
-<!-- ✅ Inject Soft Winter Jacket variant ID -->
 <script>
   window.jacketVariantId = {{ all_products['dark-winter-jacket'].variants.first.id }};
 </script>
 
-<!-- ✅ Main Script -->
 <script>
   document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll('.quick-view').forEach(button => {
