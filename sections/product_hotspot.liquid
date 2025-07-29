@@ -1,6 +1,94 @@
 {% schema %}
   {
-    "name": "Section name",
-    "settings": []
+    "name": "Products Hotspot",
+    "settings": [
+      {
+        "type": "header",
+        "content": "Section Heading"
+      },
+      {
+        "type": "text",
+        "id": "section_heading",
+        "label": "Section Heading",
+        "default": "Section Heading"
+      },
+      {
+        "type": "range",
+        "id": "heading_size_desktop",
+        "label": "Heading Font Size For Desktop",
+        "default": 36,
+        "min": 16,
+        "max": 64,
+        "unit": "px",
+        "step": 2
+      },
+      {
+        "type": "range",
+        "id": "heading_size_tablet",
+        "label": "Heading Font Size For Tablet",
+        "default": 28,
+        "min": 16,
+        "max": 64,
+        "unit": "px",
+        "step": 2
+      },
+      {
+        "type": "range",
+        "id": "heading_size_mobile",
+        "label": "Heading Font Size For Mobile",
+        "default": 24,
+        "min": 16,
+        "max": 64,
+        "unit": "px",
+        "step": 2
+      },
+      {
+        "type": "range",
+        "id": "heading_margin_bottom",
+        "label": "Heading Margin Bottom",
+        "default": 30,
+        "min": 16,
+        "max": 60,
+        "unit": "px",
+        "step": 2
+      },
+      {
+        "type": "header",
+        "content": "Section Color"
+      },
+      {
+        "type": "color",
+        "id": "background_color",
+        "label": "Section Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "color",
+        "id": "heading_color",
+        "label": "Section Heading Color",
+        "default": "#000000"
+      },
+      {
+        "type": "header",
+        "content": "Section Top/Bottom Padding"
+      },
+      {
+        "type": "range",
+        "id": "padding_top_desktop",
+        "label": "Section Top Padding For Desktop",
+        "default": 90,
+        "min": 0,
+        "max": 100,
+        "unit": "px",
+        "step": 2
+      }
+    ],
+    "blocks": [],
+    "presets": [
+      {
+        "name": "Products Hotspot",
+        "category": "Custom"
+      }
+    ]
   }
 {% endschema %}
