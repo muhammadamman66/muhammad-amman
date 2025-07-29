@@ -484,6 +484,63 @@
     });
   });
 </script>
+<script>
+  document.addEventListener('DOMContentLoaded', async function () {
+    const softJacketHandle = 'soft-winter-jacket';
+
+    // Get Soft Winter Jacket's default variant ID
+    let softJacketVariantId = null;
+    try {
+      const response = await fetch(`/products/${softJacketHandle}.js`);
+      const data = await response.json();
+      softJacketVariantId = data.variants[0].id;
+    } catch (err) {
+      console.error('Failed to fetch soft winter jacket variant:', err);
+    }
+
+    // Attach submit listener to all quick-view forms
+    document.querySelectorAll('.quick-view-form').forEach(form => {
+      form.addEventListener('submit', async function (e) {
+        const variantId = form.querySelector('.variant-id').value;
+        const selectedColor = form.querySelector('.swatch.active')?.dataset.color?.toLowerCase();
+        const selectedSize = form.querySelector('.size-select')?.value?.toLowerCase();
+
+        // Check for Color = Black and Size = M
+        if (selectedColor === 'black' && selectedSize === 'm' && softJacketVariantId) {
+          e.preventDefault(); // Stop normal form submission
+
+          // Add the original selected product
+          const originalResponse = await fetch('/cart/add.js', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Accept': 'application/json'
+            },
+            body: JSON.stringify({ id: variantId, quantity: 1 })
+          });
+
+          if (originalResponse.ok) {
+            // Then add the Soft Winter Jacket
+            await fetch('/cart/add.js', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Accept': 'application/json'
+              },
+              body: JSON.stringify({ id: softJacketVariantId, quantity: 1 })
+            });
+
+            // Optionally redirect or show confirmation
+            window.location.href = '/cart'; // or show confirmation
+          } else {
+            alert('Failed to add product to cart');
+          }
+        }
+        // Else, let it submit normally
+      });
+    });
+  });
+</script>
 
 {% schema %}
   {
