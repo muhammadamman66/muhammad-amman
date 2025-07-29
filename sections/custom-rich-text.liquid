@@ -1,3 +1,23 @@
+<style>
+  .custon-richtext-{{ section.id }} {
+    background: {{ section.settings.section_bg_color }};
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+  }
+  @media screen and (max-eidth: 767px) {
+    .custon-richtext-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+  }
+</style>
+
+<div class="custom-richtext-{{ section.id }}">
+  <div class="custom-container">
+    <div class="custom-text">{{ section.settings.rich_text }}</div>
+  </div>
+</div>
+
 {% schema %}
   {
     "name": "Custom Rich Text",
