@@ -4,6 +4,12 @@
     padding-top: {{ section.settings.padding_top_desktop }}px;
     padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
   }
+  .custom-richtext-{{ section.id }} .custom-text {
+    line-height: normal;
+    font-size: {{ section.settings.font_size_desktop }}px;
+    font-weight: 400;
+    color: {{ section.settings.text_color }};
+  }
   @media screen and (max-eidth: 767px) {
     .custom-richtext-{{ section.id }} {
       padding-top: {{ section.settings.padding_top_mobile }}px;
