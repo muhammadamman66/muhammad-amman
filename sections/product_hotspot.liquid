@@ -315,7 +315,7 @@
             {% if block.settings.image %}
               <img src="{{ block.settings.image | image_url: width: 600 }}" alt="{{ product.title }}" />
             
-              <button class="quick-view" data-modal-target="quick-view-{{ product.handle }}" style="top: {{ block.settings.popup_vertical }}%; left: {{ block.settings.popup_horizontal }}%; transform: translate({{ block.settings.popup_horizontal }}% , {{ block.settings.popup_vertical }}%)">
+              <button class="quick-view" data-modal-target="quick-view-{{ product.handle }}" style="top: {{ block.settings.popup_vertical }}%; left: {{ block.settings.popup_horizontal }}%; transform: translate(-{{ block.settings.popup_horizontal }}% , -{{ block.settings.popup_vertical }}%)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="11" height="11" viewBox="0 0 11 11" fill="none">
                   <path d="M5.3457 1.04175V9.50329" stroke="black" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
                   <path d="M1.11523 5.27246H9.57677" stroke="black" stroke-width="1.5" stroke-linecap="square" stroke-linejoin="round"/>
