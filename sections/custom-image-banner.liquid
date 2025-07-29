@@ -138,7 +138,9 @@
 
 <div class="custom-banner-{{ section.id }}">
   <div class="custom-banner-content">
-    <img src="{{ section.settings.desktop_image | image_url }}" alt="Gift Guide Banner" class="custom-banner-image small-hide medium-hide">
+    {% if section.settings.desktop_image != blank %}
+      <img src="{{ section.settings.desktop_image | image_url }}" alt="Gift Guide Banner" class="custom-banner-image small-hide medium-hide">
+    {% endif %}
     <div class="mobile-image-and-button">
       {% if section.settings.mobile_image != blank %}
         <img src="{{ section.settings.mobile_image | image_url }}" alt="Gift Guide Banner" class="custom-banner-image large-up-hide">
