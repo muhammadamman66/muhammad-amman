@@ -1,0 +1,140 @@
+<style>
+  .custom-richtext-{{ section.id }} {
+    background: {{ section.settings.section_bg_color }};
+    padding-top: {{ section.settings.padding_top_desktop }}px;
+    padding-bottom: {{ section.settings.padding_bottom_desktop }}px;
+  }
+  .custom-richtext-{{ section.id }} .custom-text {
+    line-height: normal;
+    font-size: {{ section.settings.font_size_desktop }}px;
+    font-weight: 400;
+    color: {{ section.settings.text_color }};
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: normal;
+  }
+  .custom-richtext-{{ section.id }} .custom-text p {
+    margin: 0;
+  }
+  @media screen and (max-eidth: 767px) {
+    .custom-richtext-{{ section.id }} {
+      padding-top: {{ section.settings.padding_top_mobile }}px;
+      padding-bottom: {{ section.settings.padding_bottom_mobile }}px;
+    }
+    .custom-richtext-{{ section.id }} .custom-text {
+      line-height: normal;
+      font-size: {{ section.settings.font_size_mobile }}px;
+      font-weight: 400;
+      color: {{ section.settings.text_color }};
+    }
+  }
+</style>
+
+<div class="custom-richtext-{{ section.id }}">
+  <div class="custom-container">
+    <div class="custom-text small-hide">{{ section.settings.rich_text | strip_html }}</div>
+    <div class="custom-text medium-hide large-up-hide">{{ section.settings.rich_text_mobile | strip_html }}</div>
+  </div>
+</div>
+
+{% schema %}
+  {
+    "name": "Custom Rich Text",
+    "settings": [
+      {
+        "type": "color",
+        "id": "section_bg_color",
+        "label": "Section Background Color",
+        "default": "#ffffff"
+      },
+      {
+        "type": "richtext",
+        "id": "rich_text",
+        "label": "Rich Text",
+        "default": "<p>Rich Text</p>"
+      },
+      {
+        "type": "richtext",
+        "id": "rich_text_mobile",
+        "label": "Rich Text",
+        "default": "<p>Rich Text Mobile</p>"
+      },
+      {
+        "type": "color",
+        "id": "text_color",
+        "label": "Rich Text Color",
+        "default": "#000000"
+      },
+      {
+        "type": "range",
+        "id": "font_size_desktop",
+        "label": "Font Size For Desktop",
+        "default": 16,
+        "min": 0,
+        "max": 32,
+        "unit": "px",
+        "step": 1
+      },
+      {
+        "type": "range",
+        "id": "font_size_mobile",
+        "label": "Font Size For Mobile",
+        "default": 14,
+        "min": 0,
+        "max": 32,
+        "unit": "px",
+        "step": 1
+      },
+      {
+        "type": "header",
+        "content": "Section Padding"
+      },
+      {
+        "type": "range",
+        "id": "padding_top_desktop",
+        "label": "Padding Top For Desktop",
+        "default": 10,
+        "min": 0,
+        "max": 100,
+        "unit": "px",
+        "step": 2
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_desktop",
+        "label": "Padding Bottom For Desktop",
+        "default": 10,
+        "min": 0,
+        "max": 100,
+        "unit": "px",
+        "step": 2
+      },
+      {
+        "type": "range",
+        "id": "padding_top_mobile",
+        "label": "Padding Top For Mobile",
+        "default": 10,
+        "min": 0,
+        "max": 100,
+        "unit": "px",
+        "step": 2
+      },
+      {
+        "type": "range",
+        "id": "padding_bottom_mobile",
+        "label": "Padding Top For Mobile",
+        "default": 10,
+        "min": 0,
+        "max": 100,
+        "unit": "px",
+        "step": 2
+      }
+    ],
+    "presets": [
+      {
+        "name": "Custom Rich Text",
+        "category": "Custom"
+      }
+    ]
+  }
+{% endschema %}
